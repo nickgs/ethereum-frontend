@@ -47,3 +47,20 @@ const checkEthBalance = async () => {
     console.log(balance);
 
 }
+
+const sendTransaction = async () => {
+    let params = [
+        {
+            from: accounts[0],
+            to: '0x1Abe2FA6908F74863BB857029e353cA3997feefA',
+            gas: Number(21000).toString(16),
+            gasPrice: Number(2500000).toString(16),
+            value: Number(1000000000000000000).toString(16)
+        }
+    ]
+
+    let result = await window.ethereum.request({method: 'eth_sendTransaction', params}).catch((err) => {
+        console.log(err);
+    })
+
+}
