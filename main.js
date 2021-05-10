@@ -302,3 +302,24 @@ const checkTokenBalance = async () => {
 
     console.log(balance.toString());
 }
+
+const transferToken = async () => {
+
+    let libcContract = new ethers.Contract(libcAddress, libcABI, provider.getSigner());
+
+    const amount = ethers.utils.parseUnits("1.0", 18);
+
+    let tx = await libcContract.transfer("0x92Ce0aC59ACCA8Ec7BdC5085AA17866a5D133a6A", amount);
+
+    checkEvents();
+}
+
+const checkEvents = async() => {
+    let libcContract = new ethers.Contract(libcAddress, libcABI, provider);
+    
+    libcContract.on("Transfer", (from, to, amount) => {
+        console.log("Got the event!");
+        console.log(from, to, amount.toString());
+    })
+    
+}
