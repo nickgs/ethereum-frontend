@@ -322,4 +322,23 @@ const checkEvents = async() => {
         console.log(from, to, amount.toString());
     })
     
+} 
+
+const simpleSignature = async () => {
+
+    const signer = provider.getSigner();
+
+    let message = "We are learning about developing application for Web3 together!";
+    let signature = await signer.signMessage(message);
+
+    let address = ethers.utils.verifyMessage(message, signature);
+
+
+    if(address.toUpperCase() === accounts[0].toUpperCase()) {
+        console.log("You own this address!");
+    }
+    else {
+        console.log("Doesn't look like you own this address!");
+    }
+
 }
