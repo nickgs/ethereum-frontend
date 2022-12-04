@@ -342,3 +342,47 @@ const simpleSignature = async () => {
     }
 
 }
+
+const queryHistoricalEvent = async() => {
+
+    // 1. define the contract address that we want to query. 
+    const nftContractAddress = "0x23581767a106ae21c074b2276D25e5C3e136a68b"; // Moonbirds
+
+    // 2. Our contracts ABI. 
+    const nftAbi = [
+        {
+            "anonymous": false,
+            "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            }
+            ],
+            "name": "Transfer",
+            "type": "event"
+        }
+    ]
+    
+    const nftContract = new ethers.Contract(nftContractAddress, nftAbi, provider);
+    
+    const filter = nftContract.filters.Transfer(null, null, null);
+
+    const results = await nftContract.queryFilter(filter, 15170150, 15171160);
+
+    console.log(results);
+
+}
